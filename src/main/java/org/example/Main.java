@@ -10,10 +10,10 @@ public class Main {
         Distancia d = new Distancia();
         Ficheros f = new Ficheros();
         ArrayList<Punto> puntos = f.LeerFichero("berlin52");
-        for (Punto punto : puntos) {
+        /*for (Punto punto : puntos) {
             System.out.println(punto.getX() + " " + punto.getY() + " " + punto.getID());
-        }
-        d = Algoritmos.BusquedaExhaustiva(puntos);
+        }*/
+        d = Algoritmos.BusquedaExhaustivaPoda(puntos);
         System.out.println("La distancia minima entre los puntos: " + d.getDistancia());
     }
 }

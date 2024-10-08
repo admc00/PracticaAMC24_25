@@ -41,10 +41,12 @@ public class Algoritmos {
         return d;
     }
 
-    public Distancia BusquedaExhaustivaPoda(ArrayList<Punto> puntos){
+    public static Distancia BusquedaExhaustivaPoda(ArrayList<Punto> puntos){
         double distanciaMin;
         Distancia menorDistancia = new Distancia();
         Distancia distanciaActual;
+
+        quickSort(puntos,0,puntos.size()-1);
 
         Punto punto1 = puntos.get(0);
         Punto punto2 = puntos.get(1);
@@ -73,6 +75,48 @@ public class Algoritmos {
         }
 
         return menorDistancia;
+    }
+
+    private static ArrayList<Punto> quickSort(ArrayList<Punto> puntos, int low, int high) {
+
+        if (low < high) {
+            int pi = partition(puntos, low, high);
+
+            quickSort(puntos, low, pi - 1);
+            quickSort(puntos, pi + 1, high);
+        }
+        return puntos;
+    }
+
+    private static int partition(ArrayList<Punto> puntos, int low, int high) {
+        Punto pivot = puntos.get(high);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (compare(puntos.get(j), pivot) <= 0) {
+                i++;
+                swap(puntos, i, j);
+            }
+        }
+
+        swap(puntos, i + 1, high);
+        return i + 1;
+    }
+
+    private static double compare(Punto p1, Punto p2) {
+        // Comparar los puntos según algún criterio, por ejemplo, comparar las coordenadas x o y.
+        // Devolver un número negativo si p1 es menor que p2,
+        // devolver 0 si p1 es igual a p2,
+        // devolver un número positivo si p1 es mayor que p2.
+
+        // Ejemplo de comparación por coordenada x:
+        return Double.compare(p1.getX(), p2.getX());
+    }
+
+    private static void swap(ArrayList<Punto> puntos, int i, int j) {
+        Punto temp = puntos.get(i);
+        puntos.set(i, puntos.get(j));
+        puntos.set(j, temp);
     }
 
 }
