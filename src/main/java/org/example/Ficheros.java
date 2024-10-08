@@ -25,7 +25,7 @@ public class Ficheros {
         try {
             //String localDir = System.getProperty("user.dir");
             //File file = new File(localDir + "\\config.properties");
-            archivo = new File("C:\\Users\\FX506\\Documents\\UNI\\AMC\\PracticaAMC\\dataset\\"+ texto + ".tsp\\" + texto + ".tsp");
+            archivo = new File("..\\dataset\\"+ texto + ".tsp\\" + texto + ".tsp");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
 
