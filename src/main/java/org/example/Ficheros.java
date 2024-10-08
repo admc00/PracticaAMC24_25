@@ -27,6 +27,7 @@ public class Ficheros {
             System.out.println(localDir);
             archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + ".tsp");
             //archivo = new File("..\\..\\..\\..\\..\\dataset\\" + texto + ".tsp");
+
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
 
