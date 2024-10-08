@@ -16,8 +16,8 @@ public class Distancia {
         this.x2 = new Punto();
     }
 
-    public int getDistancia() {
-        return (int)this.distancia;
+    public double getDistancia() {
+        return this.distancia;
     }
 
     private void distancia() {
