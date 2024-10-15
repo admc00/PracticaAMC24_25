@@ -13,7 +13,7 @@ public class Main {
         for (Punto punto : puntos) {
             System.out.println(punto.getX() + " " + punto.getY() + " " + punto.getID());
         }
-        d = Algoritmos.BusquedaExhaustiva(puntos);
+        //d = Algoritmos.BusquedaExhaustiva(puntos);
         System.out.println("La distancia minima entre los puntos: " + d.getDistancia());
     }
 }

@@ -13,15 +13,14 @@ public class Ficheros {
     BufferedReader br;
     ArrayList<Punto> p;
 
-    public Ficheros(){
+    public Ficheros() {
         archivo = null;
         fr = null;
         br = null;
         p = new ArrayList<>();
     }
 
-    public ArrayList<Punto> LeerFichero(String texto)
-    {
+    public ArrayList<Punto> LeerFichero(String texto) {
         try {
             String localDir = System.getProperty("user.dir");
             archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + File.separator + texto + ".tsp");
@@ -32,13 +31,13 @@ public class Ficheros {
             String linea;
             while ((linea = br.readLine()) != null) {
 
-                if(linea.contains("EOF")){
+                if (linea.contains("EOF")) {
                     break;
                 }
                 String[] parte = linea.split(" ");
-                if(parte.length == 3){
+                if (parte.length == 3) {
 
-                    p.add(new Punto(Float.parseFloat(parte[1]),Float.parseFloat(parte[2]),Integer.parseInt(parte[0])));
+                    p.add(new Punto(Float.parseFloat(parte[1]), Float.parseFloat(parte[2]), Integer.parseInt(parte[0])));
                 }
                 //System.out.println(linea);
             }
@@ -55,7 +54,6 @@ public class Ficheros {
         }
         return p;
     }
-
 
 
 }
