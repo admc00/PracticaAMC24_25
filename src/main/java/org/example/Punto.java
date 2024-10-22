@@ -17,7 +17,7 @@ public class Punto {
         this.id = 0;
     }
 
-  public void setX(float x) {
+    public void setX(float x) {
         this.x = (double)x;
     }
 
