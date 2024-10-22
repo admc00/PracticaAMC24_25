@@ -2,13 +2,13 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class DivideYVenceras implements Algoritmo {
+public class DivideYVenceras {
 
     private DivideYVenceras() {
     }
 
     //ojo
-    public static Distancia distanciaMinima(ArrayList<Punto> p, int izquierda, int derecha) {
+    public static Distancia distanciaMinima(ArrayList<Punto> puntos, int izquierda, int derecha) {
         Distancia menorDistancia = null;
 
         //this.puntos = p;
@@ -17,36 +17,28 @@ public class DivideYVenceras implements Algoritmo {
 
         //long startTime = System.nanoTime();
 
+
+        // Caso base: pocos puntos, calcular por exhaustiva
         if (derecha - izquierda <= 3) {
-            double minDistancia = Double.MAX_VALUE;
-            // Caso base: pocos puntos, calcular por fuerza bruta
-            for (int i = izquierda; i <= derecha; i++) {
-                for (int j = i + 1; j <= derecha; j++) {
-                    DistanciaPuntos actualLinea = new DistanciaPuntos(puntos.get(i), puntos.get(j));
-                    double distancia = actualLinea.getDistanciaMin();
-                    puntosRecorridos++;
-                    if (distancia < minDistancia) {
-                        minDistancia = distancia;
-                        menorDistancia = actualLinea;
-                    }
-                }
-            }
-            return menorDistancia;
+            return getDistanciaMinimaExhaustivoAcotado(puntos, izquierda, derecha, Double.MAX_VALUE);
         }
 
         int medio = (izquierda + derecha) / 2;
         Punto puntoMedio = puntos.get(medio);
 
-        DistanciaPuntos lineaIzquierda = DivideyVenceras(puntos, izquierda, medio);
-        DistanciaPuntos lineaDerecha = DivideyVenceras(puntos, medio, derecha);
+        Distancia particionIzquierda = distanciaMinima(puntos, izquierda, medio);
+        Distancia particionDerecha = distanciaMinima(puntos, medio, derecha);
         double distanciaMin;
 
-        if (lineaIzquierda.getDistanciaMin() <= lineaDerecha.getDistanciaMin()) {
-            distanciaMin = lineaIzquierda.getDistanciaMin();
-            menorDistancia = lineaIzquierda;
+        var distanciaIzquierda = particionIzquierda.getDistancia();
+        var distanciaDerecha = particionDerecha.getDistancia();
+
+        if (distanciaIzquierda <= distanciaDerecha) {
+            distanciaMin = distanciaIzquierda;
+            menorDistancia = particionIzquierda;
         } else {
-            distanciaMin = lineaDerecha.getDistanciaMin();
-            menorDistancia = lineaDerecha;
+            distanciaMin = distanciaDerecha;
+            menorDistancia = particionDerecha;
         }
 
         // Crear una lista de puntos en la banda de distanciaMin
@@ -58,21 +50,37 @@ public class DivideYVenceras implements Algoritmo {
         }
 
         // Búsqueda en la banda de distanciaMin
+        //menorDistancia = getDistanciaMinimaExhaustivoAcotado(puntosEnRango,)
         for (int i = 0; i < puntosEnRango.size() - 1; i++) {
             for (int j = i + 1; j < puntosEnRango.size(); j++) {
-                DistanciaPuntos l = new DistanciaPuntos(puntosEnRango.get(i), puntosEnRango.get(j));
-                puntosRecorridos++;
-                if (l.getDistanciaMin() < distanciaMin) {
-                    distanciaMin = l.getDistanciaMin();
-                    menorDistancia = l;
+                var distanciaMedida = new Distancia(puntosEnRango.get(i), puntosEnRango.get(j));
+                if (distanciaMedida.getDistancia() < distanciaMin) {
+                    distanciaMin = distanciaMedida.getDistancia();
+                    menorDistancia = distanciaMedida;
                 }
             }
         }
 
-        long endTime = System.nanoTime();
+        /*long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;
+        tiempo /= 1000;*/
 
         return menorDistancia;
+    }
+
+    //@TODO: Rehacer
+    private static Distancia getDistanciaMinimaExhaustivoAcotado(ArrayList<Punto> puntos, int izquierda, int derecha, double distanciaMinimaInicio) {
+        var distanciaMinima = new Distancia();
+        var distanciaMinimaEncontrada = distanciaMinimaInicio;
+        for (int i = izquierda; i <= derecha; i++) {
+            for (int j = i + 1; j <= derecha; j++) {
+                var distanciaMedida = new Distancia(puntos.get(i), puntos.get(j));
+                if (distanciaMedida.getDistancia() < distanciaMinimaEncontrada) {
+                    distanciaMinimaEncontrada = distanciaMedida.getDistancia();
+                    distanciaMinima = distanciaMedida;
+                }
+            }
+        }
+        return distanciaMinima;
     }
 }

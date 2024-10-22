@@ -13,7 +13,9 @@ public class Main {
         for (Punto punto : puntos) {
             System.out.println(punto.getX() + " " + punto.getY() + " " + punto.getID());
         }
-        //d = Algoritmos.BusquedaExhaustiva(puntos);
-        System.out.println("La distancia minima entre los puntos: " + d.getDistancia());
-    }
+
+        d = BusquedaExhaustiva.distanciaMinima(puntos);
+        System.out.println("La distancia minima entre los puntos con busqueda exhaustiva es: " + d.getDistancia());
+        d = DivideYVenceras.distanciaMinima(puntos,0,puntos.size()-1);
+        System.out.println("La distancia minima entre los puntos con dyv es: " + d.getDistancia());    }
 }

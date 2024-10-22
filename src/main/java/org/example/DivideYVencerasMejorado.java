@@ -1,6 +1,6 @@
 package org.example;
 
-public class DivideYVencerasMejorado implements Algoritmo {
+public class DivideYVencerasMejorado {
 
     private DivideYVencerasMejorado() {
     }

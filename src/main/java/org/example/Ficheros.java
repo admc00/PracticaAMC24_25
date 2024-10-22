@@ -23,7 +23,7 @@ public class Ficheros {
     public ArrayList<Punto> LeerFichero(String texto) {
         try {
             String localDir = System.getProperty("user.dir");
-            archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + File.separator + texto + ".tsp");
+            archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + ".tsp" + File.separator + texto + ".tsp");
 
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);

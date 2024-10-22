@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 
-public class BusquedaExhaustivaPoda implements Algoritmo {
+public class BusquedaExhaustivaPoda {
 
     private BusquedaExhaustivaPoda() {
     }
