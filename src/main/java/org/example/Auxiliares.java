@@ -48,9 +48,9 @@ public class Auxiliares {
         puntos.set(i, puntos.get(j));
         puntos.set(j, temp);
     }
-    public class Menu {
+    public static class Menu {
 
-        private Menu(){};
+        private Menu(){}
 
         public static void crearFicheroAleatorioTSP(Scanner escaner, boolean peorCaso) {
             System.out.println("Introduce el tamaño del dataset: ");
@@ -83,7 +83,7 @@ public class Auxiliares {
         }
 
         //TODO:Hacer privado
-        private static void comprobarEstrategiasFicheroTspAux(String nombre, ArrayList puntos) {
+        private static void comprobarEstrategiasFicheroTspAux(String nombre, ArrayList<Punto> puntos) {
             ArrayList<Punto> dataset = puntos == null ? Ficheros.leerFichero(nombre) : puntos;
             System.out.printf("%-25s %-30s %-30s %-20s %-20s %-20s%n","Estrategia","Punto1","Punto2","Distancia","Calculadas","Tiempo");
 
@@ -109,7 +109,7 @@ public class Auxiliares {
             boolean salir = false;
             Scanner teclado = new Scanner(System.in);
             while(!salir){
-                int opcion = -1;
+
                 System.out.println("Estrategia a estudiar:");
                 System.out.println("1.Busqueda exhaustiva");
                 System.out.println("2.Divide y venceras");
@@ -118,7 +118,7 @@ public class Auxiliares {
                 System.out.println("0. Salir al menu principal");
                 System.out.print("Selecciona una opción: ");
 
-                opcion = teclado.nextInt();
+                int opcion = teclado.nextInt();
                 switch (opcion){
                     case 0:
                         salir = true;
