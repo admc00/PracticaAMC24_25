@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class BusquedaExhaustivaPoda {
 
+    private static double tiempo;
+
     private BusquedaExhaustivaPoda() {
     }
 
@@ -11,6 +13,9 @@ public class BusquedaExhaustivaPoda {
         double distanciaMin;
         Distancia menorDistancia = new Distancia();
         Distancia distanciaActual;
+
+        tiempo = 0;
+        long startTime = System.nanoTime();
 
         Punto punto1 = puntos.get(0);
         Punto punto2 = puntos.get(1);
@@ -38,6 +43,14 @@ public class BusquedaExhaustivaPoda {
             }
         }
 
+        long endTime = System.nanoTime();
+        tiempo = endTime - startTime;
+        tiempo /= 1000;
+
         return menorDistancia;
+    }
+
+    public static double getTiempo() {
+        return tiempo;
     }
 }

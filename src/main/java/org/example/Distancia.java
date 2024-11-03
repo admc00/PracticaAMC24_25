@@ -25,4 +25,12 @@ public class Distancia {
         double distanciaY = x1.getY() - x2.getY();
         distancia = Math.sqrt(Math.pow(distanciaX, 2) + Math.pow(distanciaY, 2));
     }
+
+    public Punto getX1() {
+        return x1;
+    }
+
+    public Punto getX2() {
+        return x2;
+    }
 }

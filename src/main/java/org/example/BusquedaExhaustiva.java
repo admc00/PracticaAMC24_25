@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 public class BusquedaExhaustiva {
 
+    private static double tiempo;
+
     private BusquedaExhaustiva() {
     }
 
     public static Distancia distanciaMinima(ArrayList<Punto> puntos) {
+
+        tiempo = 0;
+        long startTime = System.nanoTime();
+
         Distancia distanciaMinima = new Distancia();
         double distanciaMinimaEncontrada = Double.MAX_VALUE;
         for (int i = 0; i < puntos.size(); i++) {
@@ -19,6 +25,15 @@ public class BusquedaExhaustiva {
                 }
             }
         }
+
+        long endTime = System.nanoTime();
+        tiempo = endTime - startTime;
+        tiempo /= 1000;
+
         return distanciaMinima;
+    }
+
+    public static double getTiempo(){
+        return tiempo;
     }
 }

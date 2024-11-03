@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class DivideYVenceras {
 
+    private static double tiempo;
+
     private DivideYVenceras() {
     }
 
@@ -11,11 +13,9 @@ public class DivideYVenceras {
     public static Distancia distanciaMinima(ArrayList<Punto> puntos, int izquierda, int derecha) {
         Distancia menorDistancia = null;
 
-        //this.puntos = p;
+         tiempo = 0;
 
-        //tiempo = 0;
-
-        //long startTime = System.nanoTime();
+        long startTime = System.nanoTime();
 
 
         // Caso base: pocos puntos, calcular por exhaustiva
@@ -61,11 +61,15 @@ public class DivideYVenceras {
             }
         }
 
-        /*long endTime = System.nanoTime();
+        long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;*/
+        tiempo /= 1000;
 
         return menorDistancia;
+    }
+
+    public static double getTiempo(){
+        return tiempo;
     }
 
     //@TODO: Rehacer
