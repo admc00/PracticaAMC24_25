@@ -17,27 +17,27 @@ public class Punto {
         this.id = 0;
     }
 
-    public void setX(float x) {
-        this.x = (double)x;
-    }
-
-    public void setY(float y) {
-        this.y = (double)y;
-    }
-
-    public void setID(int id) {
-        this.id = id;
-    }
-
     public double getX() {
         return this.x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
     }
 
     public double getY() {
         return this.y;
     }
 
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public float getID() {
-        return (float)this.id;
+        return (float) this.id;
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 }

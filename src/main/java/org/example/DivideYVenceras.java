@@ -13,7 +13,7 @@ public class DivideYVenceras {
     public static Distancia distanciaMinima(ArrayList<Punto> puntos, int izquierda, int derecha) {
         Distancia menorDistancia = null;
 
-         tiempo = 0;
+        tiempo = 0;
 
         long startTime = System.nanoTime();
 
@@ -63,12 +63,12 @@ public class DivideYVenceras {
 
         long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;
+        tiempo /= 1000000;
 
         return menorDistancia;
     }
 
-    public static double getTiempo(){
+    public static double getTiempo() {
         return tiempo;
     }
 

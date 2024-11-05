@@ -29,7 +29,7 @@ public class Ficheros {
 
             var lineas = br.lines().skip(6).toList();
 
-            for (var linea:lineas){
+            for (var linea : lineas) {
                 if (linea.contains("EOF")) {
                     break;
                 }
@@ -98,12 +98,18 @@ public class Ficheros {
     }
 
     public static void crearArchivoTSP(int size, boolean peorCaso) {
+        File dir, file;
 
-        File file = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + "dataset" + size + ".tsp");
+        dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + "dataset" + size + ".tsp");
+        dir.mkdirs();
+
+        file = new File(dir.getPath() + File.separator + "dataset" +  size + ".tsp");
+
         String filePath = file.toString();
         Random r = new Random();
         r.setSeed(System.nanoTime());
         DecimalFormat decimalFormat = new DecimalFormat("#.##########");
+
         try {
             ArrayList<Punto> puntos;
 
@@ -134,7 +140,7 @@ public class Ficheros {
 
     }
 
-    public static ArrayList<String> leerNombreCarpetas(){
+    public static ArrayList<String> leerNombreCarpetas() {
         String carpetaRuta = System.getProperty("user.dir") + File.separator + "dataset";
         ArrayList<String> nombresCarpetas = new ArrayList<>();
 

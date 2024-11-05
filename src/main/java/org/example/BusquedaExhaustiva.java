@@ -28,12 +28,12 @@ public class BusquedaExhaustiva {
 
         long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;
+        tiempo /= 1000000;
 
         return distanciaMinima;
     }
 
-    public static double getTiempo(){
+    public static double getTiempo() {
         return tiempo;
     }
 }
