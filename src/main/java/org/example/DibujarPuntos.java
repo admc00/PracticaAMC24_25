@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DibujarPuntos extends JPanel {
 
-    private  ArrayList<Punto> puntos;
+    private ArrayList<Punto> puntos;
 
     public DibujarPuntos() {
 

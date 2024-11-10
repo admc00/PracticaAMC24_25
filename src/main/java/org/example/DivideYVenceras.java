@@ -7,12 +7,12 @@ public class DivideYVenceras {
     private static double tiempo;
     private static int puntosRecorridos;
 
-     DivideYVenceras() {
+    private DivideYVenceras() {
     }
 
     //ojo
     public static Distancia distanciaMinima(ArrayList<Punto> puntos, int izquierda, int derecha) {
-        Distancia menorDistancia = null;
+        Distancia menorDistancia;
 
         tiempo = 0;
 
@@ -76,7 +76,6 @@ public class DivideYVenceras {
     }
 
 
-
     private static Distancia getDistanciaMinimaExhaustivoAcotado(ArrayList<Punto> puntos, int izquierda, int derecha, double distanciaMinimaInicio) {
         var distanciaMinima = new Distancia();
         var distanciaMinimaEncontrada = distanciaMinimaInicio;
@@ -92,6 +91,7 @@ public class DivideYVenceras {
         }
         return distanciaMinima;
     }
+
     public static int getPuntosRecorridos() {
         return puntosRecorridos;
     }

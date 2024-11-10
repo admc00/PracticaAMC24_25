@@ -39,7 +39,8 @@ public class BusquedaExhaustiva {
     public static double getTiempo() {
         return tiempo;
     }
-    public static int getPuntosRecorridos(){
+
+    public static int getPuntosRecorridos() {
         return puntosRecorridos;
     }
 }

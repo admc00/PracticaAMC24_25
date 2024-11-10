@@ -1,7 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DivideYVencerasMejorado {
@@ -63,7 +63,7 @@ public class DivideYVencerasMejorado {
         }
 
         // Ordenar los puntos en la franja por coordenada y
-        Collections.sort(puntosEnRango, (p1, p2) -> Double.compare(p1.getY(), p2.getY()));
+        puntosEnRango.sort(Comparator.comparingDouble(Punto::getY));
 
         // Búsqueda de pares cercanos en la franja
         for (int i = 0; i < puntosEnRango.size() - 1; i++) {
@@ -80,7 +80,7 @@ public class DivideYVencerasMejorado {
 
         long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;
+        tiempo /= 1000000;
 
         return menorDistancia;
     }
@@ -88,6 +88,7 @@ public class DivideYVencerasMejorado {
     public static double getTiempo() {
         return tiempo;
     }
+
     public static int getPuntosRecorridos() {
         return puntosRecorridos;
     }

@@ -47,7 +47,7 @@ public class BusquedaExhaustivaPoda {
 
         long endTime = System.nanoTime();
         tiempo = endTime - startTime;
-        tiempo /= 1000;
+        tiempo /= 1000000;
 
         return menorDistancia;
     }
@@ -55,7 +55,8 @@ public class BusquedaExhaustivaPoda {
     public static double getTiempo() {
         return tiempo;
     }
-    public static int getPuntosRecorridos(){
+
+    public static int getPuntosRecorridos() {
         return puntosRecorridos;
     }
 }

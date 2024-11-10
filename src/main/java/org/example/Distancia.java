@@ -2,9 +2,9 @@ package org.example;
 
 public class Distancia {
 
-    private double distancia;
     private final Punto x1;
     private final Punto x2;
+    private double distancia;
 
     public Distancia(Punto x1, Punto x2) {
         this.x1 = x1;

@@ -1,7 +1,6 @@
 package org.example;
 
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -20,7 +19,13 @@ public class Ficheros {
 
         try {
             String localDir = System.getProperty("user.dir");
-            var archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + File.separator + texto);
+            File archivo;
+
+            if (texto.endsWith(".tsp")) {
+                archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + File.separator + texto);
+            } else {
+                archivo = new File(localDir + File.separator + "dataset" + File.separator + texto + File.separator + texto + ".tsp");
+            }
 
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
@@ -38,27 +43,15 @@ public class Ficheros {
                     p.add(new Punto(Double.parseDouble(parte[1]), Double.parseDouble(parte[2]), Integer.parseInt(parte[0])));
                 }
             }
-
-            /*while ((linea = br.readLine()) != null) {
-
-                if (linea.contains("EOF")) {
-                    break;
-                }
-                String[] parte = linea.split(" ");
-                if (parte.length == 3) {
-
-                    p.add(new Punto(Double.parseDouble(parte[1]), Double.parseDouble(parte[2]), Integer.parseInt(parte[0])));
-                }
-            }*/
         } catch (Exception ex) {
-            Logger.getLogger(Ficheros.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ficheros.class.getName()).log(Level.SEVERE, "ERROR LEYENDO FICHEROS", ex);
         } finally {
             try {
                 if (null != fr) {
                     fr.close();
                 }
             } catch (Exception e2) {
-                e2.printStackTrace();
+                Logger.getLogger(Ficheros.class.getName()).log(Level.SEVERE, "ERROR LEYENDO FICHEROS", e2);
             }
         }
         return p;
@@ -105,10 +98,10 @@ public class Ficheros {
             dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + "dataset" + size + ".tsp");
             dir.mkdirs();
 
-            file = new File(dir.getPath() + File.separator + "dataset" +  size + ".tsp");
+            file = new File(dir.getPath() + File.separator + "dataset" + size + ".tsp");
 
             puntos = rellenarPuntos(size, peorCaso);
-        }else {
+        } else {
             dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + estrategia + ".tsp");
             dir.mkdirs();
 
@@ -118,17 +111,11 @@ public class Ficheros {
             size = puntos.size();
         }
 
-
         String filePath = file.toString();
-        Random r = new Random();
-        r.setSeed(System.nanoTime());
-        //DecimalFormat decimalFormat = new DecimalFormat("#.##########");
 
         try {
-            //ArrayList<Punto> puntos = estrategia == null ? rellenarPuntos(size, peorCaso) : dataSet;
-
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-            writer.write("NAME: dataset" + estrategia != null ? estrategia : size + ".tsp");
+            writer.write("NAME: " + (estrategia != null ? estrategia : ("dataset" + size)) + ".tsp");
             writer.newLine();
             writer.write("TYPE: TSP");
             writer.newLine();
@@ -144,10 +131,13 @@ public class Ficheros {
                 writer.write(i + 1 + " " + puntos.get(i).getX() + " " + puntos.get(i).getY());
                 writer.newLine();
             }
+            writer.write("EOF");
+            writer.newLine();
+
             //Forzar escritura en el archivo
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(Ficheros.class.getName()).log(Level.SEVERE, "ERROR ARCHIVOS TSP", e);
         }
 
     }
