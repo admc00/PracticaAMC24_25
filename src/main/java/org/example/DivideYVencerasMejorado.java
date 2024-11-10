@@ -7,6 +7,7 @@ import java.util.List;
 public class DivideYVencerasMejorado {
 
     private static double tiempo;
+    private static int puntosRecorridos = 0;
 
     private DivideYVencerasMejorado() {
     }
@@ -25,6 +26,7 @@ public class DivideYVencerasMejorado {
                 for (int j = i + 1; j < derecha; j++) {
                     Distancia actualLinea = new Distancia(puntos.get(i), puntos.get(j));
                     double distancia = actualLinea.getDistancia();
+                    puntosRecorridos++;
                     if (distancia < Mindistancia) {
                         Mindistancia = distancia;
                         menorDistancia = actualLinea;
@@ -68,6 +70,7 @@ public class DivideYVencerasMejorado {
             for (int j = i + 1; j < puntosEnRango.size() && j - i < 12; j++) {
                 Distancia linea = new Distancia(puntosEnRango.get(i), puntosEnRango.get(j));
                 double distancia = linea.getDistancia();
+                puntosRecorridos++;
                 if (distancia < distanciaMin) {
                     distanciaMin = distancia;
                     menorDistancia = linea;
@@ -84,5 +87,8 @@ public class DivideYVencerasMejorado {
 
     public static double getTiempo() {
         return tiempo;
+    }
+    public static int getPuntosRecorridos() {
+        return puntosRecorridos;
     }
 }

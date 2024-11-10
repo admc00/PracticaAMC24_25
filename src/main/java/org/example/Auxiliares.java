@@ -55,34 +55,41 @@ public class Auxiliares {
         private Menu() {
         }
 
-        private static void comprobarEstrategiasFicheroTspAux(String nombre, ArrayList<Punto> puntos) {
+        private static void comprobarEstrategiasFicheroTspAux(String nombre, ArrayList<Punto> puntos, boolean crearFicheros) {
+            String formato = "%-25s %-5.0f %-1s %-5.3f %-1s %-5.3f %-1s %-5.3f %-1s %-5.3f %-1s %-5.3f %-5s %-20.8f %-20d %-20.4f%n";
             ArrayList<Punto> dataset = puntos == null ? Ficheros.leerFichero(nombre) : puntos;
             System.out.printf("%-25s %-30s %-30s %-20s %-20s %-20s%n", "Estrategia", "Punto1", "Punto2", "Distancia", "Calculadas", "Tiempo");
 
             Distancia bex = BusquedaExhaustiva.distanciaMinima(dataset);
-            System.out.printf("%-25s %-30s %-30s %-20.4f %-20d %-20.1f%n", "Busqueda exhaustiva", bex.getX1().getID() + "(" + bex.getX1().getX() + ", " + bex.getX2().getY() + ")", bex.getX2().getID() + "(" + bex.getX2().getX() + ", " + bex.getX2().getY() + ")", bex.getDistancia(), 0, BusquedaExhaustiva.getTiempo());
-
+            System.out.printf(formato, "Busqueda exhaustiva", bex.getX1().getID(), "(", bex.getX1().getX(), ", ", bex.getX2().getY(), ")", bex.getX2().getID(), "(", bex.getX2().getX(), ", ", bex.getX2().getY(), ")", bex.getDistancia(), BusquedaExhaustiva.getPuntosRecorridos(), BusquedaExhaustiva.getTiempo());
+            Ficheros.crearArchivoTSP(dataset,"BusquedaExhaustiva",null, null);
 
             ArrayList<Punto> datasetOrd = Auxiliares.quickSort(dataset, 0, dataset.size() - 1);
 
 
             Distancia dyv = DivideYVenceras.distanciaMinima(datasetOrd, 0, dataset.size() - 1);
-            System.out.printf("%-25s %-30s %-30s %-20.4f %-20d %-20.1f%n", "Divide y venceras", dyv.getX1().getID() + "(" + dyv.getX1().getX() + ", " + dyv.getX2().getY() + ")", dyv.getX2().getID() + "(" + dyv.getX2().getX() + ", " + dyv.getX2().getY() + ")", dyv.getDistancia(), 0, DivideYVenceras.getTiempo());
+            System.out.printf(formato, "Divide y venceras", dyv.getX1().getID(), "(", dyv.getX1().getX(), ", ", dyv.getX2().getY(), ")", dyv.getX2().getID(), "(", dyv.getX2().getX(), ", ", dyv.getX2().getY(), ")", dyv.getDistancia(), DivideYVenceras.getPuntosRecorridos(), DivideYVenceras.getTiempo());
+            Ficheros.crearArchivoTSP(datasetOrd,"DivideYVenceras",null, null);
+
 
             Distancia dyvm = DivideYVencerasMejorado.distanciaMinima(datasetOrd, 0, dataset.size() - 1);
-            System.out.printf("%-25s %-30s %-30s %-20.4f %-20d %-20.1f%n", "Divide y venceras mejorado", dyvm.getX1().getID() + "(" + dyvm.getX1().getX() + ", " + dyvm.getX2().getY() + ")", dyvm.getX2().getID() + "(" + dyvm.getX2().getX() + ", " + dyvm.getX2().getY() + ")", dyvm.getDistancia(), 0, DivideYVencerasMejorado.getTiempo());
+            System.out.printf(formato, "Divide y venceras mejorado", dyvm.getX1().getID(), "(", dyvm.getX1().getX(), ", ", dyvm.getX2().getY(), ")", dyvm.getX2().getID(), "(", dyvm.getX2().getX(), ", ", dyvm.getX2().getY(), ")", dyvm.getDistancia(), DivideYVencerasMejorado.getPuntosRecorridos(), DivideYVencerasMejorado.getTiempo());
+            Ficheros.crearArchivoTSP(datasetOrd,"DivideYVencerasMejorado",null, null);
+
+
 
             Distancia bexp = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-            System.out.printf("%-25s %-30s %-30s %-20.4f %-20d %-20.1f%n", "Busqueda exhaustiva poda", bexp.getX1().getID() + "(" + bexp.getX1().getX() + ", " + bexp.getX2().getY() + ")", bexp.getX2().getID() + "(" + bexp.getX2().getX() + ", " + bexp.getX2().getY() + ")", bexp.getDistancia(), 0, BusquedaExhaustivaPoda.getTiempo());
-
+            System.out.printf(formato, "Busqueda exhaustiva poda", bexp.getX1().getID(), "(", bexp.getX1().getX(), ", ", bexp.getX2().getY(), ")", bexp.getX2().getID(), "(", bexp.getX2().getX(), ", ", bexp.getX2().getY(), ")", bexp.getDistancia(), BusquedaExhaustivaPoda.getPuntosRecorridos(), BusquedaExhaustivaPoda.getTiempo());
+            Ficheros.crearArchivoTSP(datasetOrd,"BusquedaExhaustivaPoda",null, null);
         }
+
 
 
 
         public static void crearFicheroAleatorioTSP(Scanner escaner, boolean peorCaso) {
             System.out.println("Introduce el tamaño del dataset: ");
             int size = escaner.nextInt();
-            Ficheros.crearArchivoTSP(size, peorCaso);
+            Ficheros.crearArchivoTSP(null,null,size, peorCaso);
         }
 
         public static void comprobarTodosLosDataset() {
@@ -91,8 +98,7 @@ public class Auxiliares {
             ArrayList<String> nomCarpetas = Ficheros.leerNombreCarpetas();
             for (String nombre : nomCarpetas) {
                 System.out.println(nombre);
-                System.out.println("Estrategia         Punto1 Punto2 distancia calculadas tiempo");
-                comprobarEstrategiasFicheroTspAux(nombre, null);
+                comprobarEstrategiasFicheroTspAux(nombre, null, false);
             }
 
         }
@@ -108,10 +114,10 @@ public class Auxiliares {
 
             System.out.println(fichero);
             //System.out.printf("%s")
-            comprobarEstrategiasFicheroTspAux(fichero, null);
+            comprobarEstrategiasFicheroTspAux(fichero, null, true);
         }
 
-        //TODO:Renombrar a estudiar estrategia
+
         public static void estudiarUnaEstrategia(Scanner teclado, boolean peorCaso) {
             var continuar = true;
             var estrategia = -1;
@@ -144,7 +150,7 @@ public class Auxiliares {
                         for (int i = 500; i <= 5000; i += 500) {
                             ArrayList<Punto> dataset = Ficheros.rellenarPuntos(i, peorCaso);
                             BusquedaExhaustiva.distanciaMinima(dataset);
-                            System.out.printf("%-10d %20.1f%n", i, BusquedaExhaustiva.getTiempo());
+                            System.out.printf("%-10d %20.4f%n", i, BusquedaExhaustiva.getTiempo());
                         }
                     }
                     case Estrategias.EXHAUSTIVO_PODA -> {
@@ -156,7 +162,7 @@ public class Auxiliares {
                             ArrayList<Punto> dataset = Ficheros.rellenarPuntos(i, peorCaso);
                             ArrayList<Punto> datasetOrd = Auxiliares.quickSort(dataset, 0, dataset.size() - 1);
                             BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-                            System.out.printf("%-10d %20.1f%n", i, BusquedaExhaustivaPoda.getTiempo());
+                            System.out.printf("%-10d %20.4f%n", i, BusquedaExhaustivaPoda.getTiempo());
                         }
                     }
                     case Estrategias.DIVIDE_Y_VENCERAS -> {
@@ -168,7 +174,7 @@ public class Auxiliares {
                             ArrayList<Punto> dataset = Ficheros.rellenarPuntos(i, peorCaso);
                             ArrayList<Punto> datasetOrd = Auxiliares.quickSort(dataset, 0, dataset.size() - 1);
                             DivideYVenceras.distanciaMinima(datasetOrd, 0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f%n", i, DivideYVenceras.getTiempo());
+                            System.out.printf("%-10d %20.4f%n", i, DivideYVenceras.getTiempo());
                         }
                     }
                     case Estrategias.DIVIDE_Y_VENCERAS_MEJORADO -> {
@@ -180,7 +186,7 @@ public class Auxiliares {
                             ArrayList<Punto> dataset = Ficheros.rellenarPuntos(i, peorCaso);
                             ArrayList<Punto> datasetOrd = Auxiliares.quickSort(dataset, 0, dataset.size() - 1);
                             DivideYVencerasMejorado.distanciaMinima(datasetOrd, 0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f%n", i, DivideYVencerasMejorado.getTiempo());
+                            System.out.printf("%-10d %20.4f%n", i, DivideYVencerasMejorado.getTiempo());
                         }
                     }
                     default -> System.out.println("Número no valido.Elige un número de nuevo.");
@@ -226,7 +232,7 @@ public class Auxiliares {
 
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustiva.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaExPoda.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustiva.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaExPoda.getDistancia());
                         }
                     }
                     case Estrategias.EXvsDYV -> {
@@ -241,7 +247,7 @@ public class Auxiliares {
 
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustiva.getTiempo(), DivideYVenceras.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaDyV.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustiva.getTiempo(), DivideYVenceras.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaDyV.getDistancia());
                         }
                     }
                     case Estrategias.EXvsDYVM -> {
@@ -256,7 +262,7 @@ public class Auxiliares {
 
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustiva.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaDyVMejorado.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustiva.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaExhaustivo.getDistancia(), distanciaDyVMejorado.getDistancia());
                         }
                     }
                     case Estrategias.EXPODAvsEX -> {
@@ -271,7 +277,7 @@ public class Auxiliares {
 
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustivaPoda.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaExPoda.getDistancia(), distanciaExhaustivo.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustivaPoda.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaExPoda.getDistancia(), distanciaExhaustivo.getDistancia());
                         }
                     }
                     case Estrategias.EXPODAvsDYV -> {
@@ -286,7 +292,7 @@ public class Auxiliares {
 
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustivaPoda.getTiempo(), DivideYVenceras.getTiempo(), distanciaExPoda.getDistancia(), distanciaDyV.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustivaPoda.getTiempo(), DivideYVenceras.getTiempo(), distanciaExPoda.getDistancia(), distanciaDyV.getDistancia());
                         }
                     }
                     case Estrategias.EXPODAvsDYVM -> {
@@ -301,7 +307,7 @@ public class Auxiliares {
 
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0,datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustivaPoda.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaExPoda.getDistancia(), distanciaDyVMejorado.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, BusquedaExhaustivaPoda.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaExPoda.getDistancia(), distanciaDyVMejorado.getDistancia());
                         }
                     }
                     case Estrategias.DYVvsEX -> {
@@ -316,7 +322,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVenceras.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaDyV.getDistancia(), distanciaExhaustivo.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVenceras.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaDyV.getDistancia(), distanciaExhaustivo.getDistancia());
                         }
                     }
                     case Estrategias.DYVvsEXPODA -> {
@@ -331,7 +337,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVenceras.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaDyV.getDistancia(), distanciaExPoda.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVenceras.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaDyV.getDistancia(), distanciaExPoda.getDistancia());
                         }
                     }
                     case Estrategias.DYVvsDYVM -> {
@@ -346,7 +352,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVenceras.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaDyV.getDistancia(), distanciaDyVMejorado.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVenceras.getTiempo(), DivideYVencerasMejorado.getTiempo(), distanciaDyV.getDistancia(), distanciaDyVMejorado.getDistancia());
                         }
                     }
                     case Estrategias.DYVMvsEX -> {
@@ -361,7 +367,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaExhaustivo = BusquedaExhaustiva.distanciaMinima(dataset);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVencerasMejorado.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaExhaustivo.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVencerasMejorado.getTiempo(), BusquedaExhaustiva.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaExhaustivo.getDistancia());
                         }
                     }
                     case Estrategias.DYVMvsEXPODA -> {
@@ -376,7 +382,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaExPoda = BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVencerasMejorado.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaExPoda.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVencerasMejorado.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaExPoda.getDistancia());
                         }
                     }
                     case Estrategias.DYVMvsDYV -> {
@@ -391,7 +397,7 @@ public class Auxiliares {
 
                             Distancia distanciaDyVMejorado = DivideYVencerasMejorado.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
                             Distancia distanciaDyV = DivideYVenceras.distanciaMinima(datasetOrd,0, datasetOrd.size() - 1);
-                            System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, DivideYVencerasMejorado.getTiempo(), DivideYVenceras.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaDyV.getDistancia());
+                            System.out.printf("%-10d %20.4f %20.4f %20.8f %20.8f%n", i, DivideYVencerasMejorado.getTiempo(), DivideYVenceras.getTiempo(), distanciaDyVMejorado.getDistancia(), distanciaDyV.getDistancia());
                         }
                     }
                     case Estrategias.IDENTICO -> {
@@ -416,7 +422,7 @@ public class Auxiliares {
                 DivideYVenceras.distanciaMinima(datasetOrd, 0, datasetOrd.size() - 1);
                 DivideYVencerasMejorado.distanciaMinima(datasetOrd, 0, datasetOrd.size() - 1);
                 BusquedaExhaustivaPoda.distanciaMinima(datasetOrd);
-                System.out.printf("%-10d %20.1f %20.1f %20.1f %20.1f%n", i, BusquedaExhaustiva.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), DivideYVenceras.getTiempo(), DivideYVencerasMejorado.getTiempo());
+                System.out.printf("%-10d %20.4f %20.4f %20.4f %20.4f%n", i, BusquedaExhaustiva.getTiempo(), BusquedaExhaustivaPoda.getTiempo(), DivideYVenceras.getTiempo(), DivideYVencerasMejorado.getTiempo());
             }
         }
 
@@ -426,7 +432,7 @@ public class Auxiliares {
 
             var puntos = Ficheros.rellenarPuntos(talla, peorCaso);
 
-            comprobarEstrategiasFicheroTspAux(null, puntos);
+            comprobarEstrategiasFicheroTspAux(null, puntos, false);
         }
 
         private enum Estrategias {
@@ -517,6 +523,13 @@ public class Auxiliares {
                     }
                 }
             }
+        }
+        public static void CargarDataSet(Scanner teclado, boolean peorCaso) {
+            System.out.println("Introduce el nombre/ruta del dataset:");
+            var nombre = teclado.next();
+            ArrayList<Punto> listaFicheros = Ficheros.leerFichero(nombre);
+            Ficheros.crearArchivoTSP(listaFicheros,"dataset0",null, peorCaso);
+
         }
     }
 

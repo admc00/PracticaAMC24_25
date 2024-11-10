@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class DivideYVenceras {
 
     private static double tiempo;
+    private static int puntosRecorridos;
 
-    private DivideYVenceras() {
+     DivideYVenceras() {
     }
 
     //ojo
@@ -14,6 +15,7 @@ public class DivideYVenceras {
         Distancia menorDistancia = null;
 
         tiempo = 0;
+
 
         long startTime = System.nanoTime();
 
@@ -54,6 +56,7 @@ public class DivideYVenceras {
         for (int i = 0; i < puntosEnRango.size() - 1; i++) {
             for (int j = i + 1; j < puntosEnRango.size(); j++) {
                 var distanciaMedida = new Distancia(puntosEnRango.get(i), puntosEnRango.get(j));
+                puntosRecorridos++;
                 if (distanciaMedida.getDistancia() < distanciaMin) {
                     distanciaMin = distanciaMedida.getDistancia();
                     menorDistancia = distanciaMedida;
@@ -72,13 +75,15 @@ public class DivideYVenceras {
         return tiempo;
     }
 
-    //@TODO: Rehacer
+
+
     private static Distancia getDistanciaMinimaExhaustivoAcotado(ArrayList<Punto> puntos, int izquierda, int derecha, double distanciaMinimaInicio) {
         var distanciaMinima = new Distancia();
         var distanciaMinimaEncontrada = distanciaMinimaInicio;
         for (int i = izquierda; i <= derecha; i++) {
             for (int j = i + 1; j <= derecha; j++) {
                 var distanciaMedida = new Distancia(puntos.get(i), puntos.get(j));
+                puntosRecorridos++;
                 if (distanciaMedida.getDistancia() < distanciaMinimaEncontrada) {
                     distanciaMinimaEncontrada = distanciaMedida.getDistancia();
                     distanciaMinima = distanciaMedida;
@@ -86,5 +91,8 @@ public class DivideYVenceras {
             }
         }
         return distanciaMinima;
+    }
+    public static int getPuntosRecorridos() {
+        return puntosRecorridos;
     }
 }

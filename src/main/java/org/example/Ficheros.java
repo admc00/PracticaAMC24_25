@@ -97,26 +97,38 @@ public class Ficheros {
         return p;
     }
 
-    public static void crearArchivoTSP(int size, boolean peorCaso) {
+    public static void crearArchivoTSP(ArrayList<Punto> dataSet, String estrategia, Integer size, Boolean peorCaso) {
         File dir, file;
+        ArrayList<Punto> puntos;
 
-        dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + "dataset" + size + ".tsp");
-        dir.mkdirs();
+        if (estrategia == null) {
+            dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + "dataset" + size + ".tsp");
+            dir.mkdirs();
 
-        file = new File(dir.getPath() + File.separator + "dataset" +  size + ".tsp");
+            file = new File(dir.getPath() + File.separator + "dataset" +  size + ".tsp");
+
+            puntos = rellenarPuntos(size, peorCaso);
+        }else {
+            dir = new File(System.getProperty("user.dir") + File.separator + "dataset" + File.separator + estrategia + ".tsp");
+            dir.mkdirs();
+
+            file = new File(dir.getPath() + File.separator + estrategia + ".tsp");
+
+            puntos = dataSet;
+            size = puntos.size();
+        }
+
 
         String filePath = file.toString();
         Random r = new Random();
         r.setSeed(System.nanoTime());
-        DecimalFormat decimalFormat = new DecimalFormat("#.##########");
+        //DecimalFormat decimalFormat = new DecimalFormat("#.##########");
 
         try {
-            ArrayList<Punto> puntos;
-
-            puntos = rellenarPuntos(size, peorCaso);
+            //ArrayList<Punto> puntos = estrategia == null ? rellenarPuntos(size, peorCaso) : dataSet;
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-            writer.write("NAME: dataset" + size + ".tsp");
+            writer.write("NAME: dataset" + estrategia != null ? estrategia : size + ".tsp");
             writer.newLine();
             writer.write("TYPE: TSP");
             writer.newLine();

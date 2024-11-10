@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class BusquedaExhaustivaPoda {
 
     private static double tiempo;
+    private static int puntosRecorridos = 0;
 
     private BusquedaExhaustivaPoda() {
     }
@@ -13,6 +14,7 @@ public class BusquedaExhaustivaPoda {
         double distanciaMin;
         Distancia menorDistancia = new Distancia();
         Distancia distanciaActual;
+
 
         tiempo = 0;
         long startTime = System.nanoTime();
@@ -28,7 +30,7 @@ public class BusquedaExhaustivaPoda {
             for (int j = i + 1; j < puntos.size(); j++) {
                 Punto puntoActual = puntos.get(j);
                 distanciaActual = new Distancia(puntoBase, puntoActual);
-
+                puntosRecorridos++;
                 //Comprobamos si la distancia minima tiene que ser actualizada
                 if (distanciaActual.getDistancia() < distanciaMin) {
                     distanciaMin = distanciaActual.getDistancia();
@@ -52,5 +54,8 @@ public class BusquedaExhaustivaPoda {
 
     public static double getTiempo() {
         return tiempo;
+    }
+    public static int getPuntosRecorridos(){
+        return puntosRecorridos;
     }
 }
